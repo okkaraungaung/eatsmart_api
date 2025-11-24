@@ -15,7 +15,6 @@ export async function POST(req: Request) {
     fat,
     carbs,
     edamam_id,
-    created_by_user,
   } = body;
 
   try {
@@ -26,33 +25,18 @@ export async function POST(req: Request) {
       [edamam_id, name]
     );
 
-    console.log(rows, "------");
-
     if (rows.length > 0) {
       return NextResponse.json({ id: rows[0].id });
     }
-    console.log(name, edamam_id);
 
     const id = randomUUID();
 
     await db.query(
       `INSERT INTO foods (
-        id, name, brand, serving_size, calories, protein, fat, carbs, edamam_id, created_by_user
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-      [
-        id,
-        name,
-        brand,
-        serving_size,
-        calories,
-        protein,
-        fat,
-        carbs,
-        edamam_id,
-        created_by_user,
-      ]
+        id, name, brand, serving_size, calories, protein, fat, carbs, edamam_id
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [id, name, brand, serving_size, calories, protein, fat, carbs, edamam_id]
     );
-    console.log("after insert:", id);
 
     return NextResponse.json({ id });
   } catch (err) {

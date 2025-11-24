@@ -15,14 +15,13 @@ export async function POST(req: Request) {
     fat,
     carbs,
     edamam_id,
-    created_by_user = false,
   } = food;
 
   try {
     await db.query(
       `INSERT INTO foods 
-        (id, name, brand, serving_size, calories, protein, fat, carbs, edamam_id, created_by_user)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        (id, name, brand, serving_size, calories, protein, fat, carbs, edamam_id)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         randomUUID(),
         name,
@@ -33,7 +32,6 @@ export async function POST(req: Request) {
         fat,
         carbs,
         edamam_id,
-        created_by_user,
       ]
     );
 

@@ -40,8 +40,6 @@ export async function GET(req: NextRequest) {
       [`%${query.toLowerCase()}%`]
     );
 
-    console.log("DB Foods:", dbFoods, query);
-
     // 2. Edamam API call
     const app_id = process.env.EDAMAM_APP_ID;
     const app_key = process.env.EDAMAM_APP_KEY;

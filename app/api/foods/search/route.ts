@@ -36,9 +36,11 @@ export async function GET(req: NextRequest) {
   try {
     // 1. Get foods from DB
     const [dbFoods] = await db.query<FoodRow[]>(
-      "SELECT * FROM foods WHERE name LIKE ? LIMIT 20",
-      [`%${query}%`]
+      "SELECT * FROM foods WHERE LOWER(name) LIKE LOWER(?) LIMIT 20",
+      [`%${query.toLowerCase()}%`]
     );
+
+    console.log("DB Foods:", dbFoods, query);
 
     // 2. Edamam API call
     const app_id = process.env.EDAMAM_APP_ID;

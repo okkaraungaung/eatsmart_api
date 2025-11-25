@@ -18,6 +18,7 @@ export async function GET(req: NextRequest) {
     const [rows] = await db.query<RowDataPacket[]>(
       `
       SELECT 
+      mli.id AS id,
         f.name,
         mli.quantity AS grams,
         ROUND(f.calories * (mli.quantity / f.serving_size), 1) AS calories

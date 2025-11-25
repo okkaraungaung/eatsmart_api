@@ -20,7 +20,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Missing user id" }, { status: 400 });
 
   try {
-    console.log("Updating user:", birthday);
     await db.query(
       `UPDATE users
        SET name = ?, email = ?, birthday = ?, weight = ?, height = ?, gender = ?, activity = ?, daily_calorie_target = ?

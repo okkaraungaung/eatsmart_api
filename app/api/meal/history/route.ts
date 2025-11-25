@@ -18,23 +18,23 @@ export async function GET(req: NextRequest) {
   try {
     const [rows] = await db.query<HistoryRow[]>(
       `
-      SELECT 
-        ml.date,
-        SUM(
-          CASE 
-            WHEN mli.type = 'food' 
-              THEN f.calories * (mli.quantity / f.serving_size)
-            ELSE 0
-          END
-        ) AS calories
-      FROM meal_logs ml
-      LEFT JOIN meal_log_items mli ON ml.id = mli.meal_log_id
-      LEFT JOIN foods f ON mli.food_id = f.id
-      WHERE ml.user_id = ?
-      GROUP BY ml.date
-      ORDER BY ml.date DESC
-      LIMIT 7
-      `,
+  SELECT 
+    DATE_FORMAT(ml.date, '%Y-%m-%d') AS date,
+    SUM(
+      CASE 
+        WHEN mli.type = 'food' 
+          THEN f.calories * (mli.quantity / f.serving_size)
+        ELSE 0
+      END
+    ) AS calories
+  FROM meal_logs ml
+  LEFT JOIN meal_log_items mli ON ml.id = mli.meal_log_id
+  LEFT JOIN foods f ON mli.food_id = f.id
+  WHERE ml.user_id = ?
+  GROUP BY ml.date
+  ORDER BY ml.date DESC
+  LIMIT 7
+  `,
       [user_id]
     );
 
